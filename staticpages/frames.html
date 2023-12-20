@@ -1,0 +1,382 @@
+<!--HTML file that allows for carrying out CRUD operations on a table of data-->
+<!--Code sourced from Topic 6 Lectures and labs and Topic 10-->
+
+<html>
+    <head>
+        <title> View Frames</title>
+        <!--jquery code for Ajax-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <!--Linking to the candlesAjax.js file-->
+        <script src="framesAjax.js"></script>
+
+        <!--Bootstrap & CSS for styling the webpage-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        
+        <!--Using CSS to style the page-->
+        <style>
+            body {
+                background-color: rgb(238, 142, 201);
+            }
+
+
+            td {
+                text-align:center; color:cornflowerblue;
+            }
+            th {
+                text-align:center; color:black;background-color: lightseagreen;
+            }
+            
+
+            table {
+                border: 3px dashed cornflowerblue; background-color: lightgray; width:90%
+            }
+            
+
+            table.center {
+                margin-left: auto; 
+                margin-right: auto;
+            }
+        
+            .center {
+                text-align: center;
+        
+            } 
+            
+
+            h1, h2 {
+                text-align: center;
+                color: cornflowerblue;
+            }
+            
+
+            .ButtonCreateANewFrame {
+                margin: 0;
+                position: absolute;
+                left: 45.5%;
+                color: black;
+                padding: 4px 8px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+                border-radius: 12px;
+
+            }
+
+            .ButtonCreateANewFrame:hover {
+                background-color: lightgreen
+            }
+
+            .ButtonCreateANewFrame:active {
+                background-color: darkgreen;
+                box-shadow: 0 5px darkgrey;
+                transform: translateY(4px);
+            }
+
+
+            .ButtonCreate {
+                margin: 0;
+                position: absolute;
+                left: 48%;
+                border-radius: 12px;
+
+            }
+
+            .ButtonCreate:hover {
+                background-color: lightgreen
+            }
+
+            .ButtonCreate:active {
+                background-color: darkgreen;
+                box-shadow: 0 5px darkgrey;
+                transform: translateY(4px);
+            }
+
+
+            .ButtonUpdate {
+                margin: 0;
+                position: absolute;
+                left: 48%;
+                border-radius: 12px;
+
+            }
+
+            .ButtonUpdate:hover {
+                background-color: lightgreen
+            }
+
+            .ButtonUpdate:active {
+                background-color: darkgreen;
+                box-shadow: 0 5px darkgrey;
+                transform: translateY(4px);
+            }
+
+
+            .ButtonVisitCandles {
+                margin: 0;
+                position: absolute;
+                left: 43%;
+                color: black;
+                padding: 4px 8px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+                border-radius: 12px;
+
+            }
+
+            .ButtonVisitCandles:hover {
+                background-color: lightgreen
+            }
+
+            .ButtonVisitCandles:active {
+                background-color: darkgreen;
+                box-shadow: 0 5px darkgrey;
+                transform: translateY(4px);
+            }
+            
+            .ButtonHomepage {
+                    margin: 0;
+                    position: absolute;
+                    left: 45%;
+                    color: black;
+                    padding: 4px 8px;
+                    text-align: center;
+                    text-decoration: none;
+                    display: inline-block;
+                    font-size: 16px;
+                    margin: 4px 2px;
+                    cursor: pointer;
+                    border-radius: 12px;
+
+            }
+
+            .ButtonHomepage:hover 
+            {background-color: lightgreen}
+
+            .ButtonHomepage:active {
+                background-color: darkgreen;
+                box-shadow: 0 5px #666;
+                transform: translateY(4px);
+            }
+        
+
+            img {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        </style>
+    
+    </head>
+
+    <!--The Body of the HTML page that the user sees-->
+    <body>
+        <h1><u><i><b>Photo Frames</b></i></u></h1>
+        <img src="/images/frame.jpeg" alt="candle image" width="440" height="345">
+        <div class="ButtonCreateANewFrame"> <button id="showCreateButton" class="button" onclick="showCreate()">Create a new Frame</button></div>
+        <div>      
+        </br></br>
+            <table class="center" id="frameTable">
+                <tr>
+                        <th><i>id</i></th>
+                        <th><i>Occasion</i></th>
+                        <th><i>Colour</i></th>
+                        <th><i>Height Cm</i></th>
+                        <th><i>Width Cm</i></th>
+                        <th><i>Price €</i></th>
+                        <th><i>Update</i></th>
+                        <th><i>Delete</i></th>
+                </tr>
+                
+            </table>
+        </div>
+        <div class="center" id='createUpdateForm' style="display: none">
+                <h2><i><span id="createLabel">Create a</span> <span id="updateLabel">Update</span> a Frame</i></h2>
+                <input type="hidden" name="id"/>
+                Occasion <input type="text" name="Occasion" /><br/>
+                Colour <input type="text" name="Colour"/> <br/>
+                Height <input type="number" name="Height"/> <br/>
+                Width <input type="number" name="Width"/> <br/>
+                Price <input type="number" name="Price"/> <br/></br>
+
+                <span><button class = "ButtonCreate" id="doCreateButton" onclick="doCreate()">Create!</button></span>
+                <span><button class ="ButtonUpdate" id="doUpdateButton"  onclick="doUpdate()">Update!</button></span>
+            </div>
+            <br><br>
+
+            <div class="ButtonVisitCandles"><a href="/candles.html">
+                <button>Click here to visit Candles page</button></a>
+            </div>
+            <br><br>
+
+            <div class="ButtonHomepage"><a href="/frames.html">
+                <button>Back to Frames page</button></a>
+            </div>
+    </body>
+
+    <!--Javascript:-->
+    <script>
+        // Showing and hiding buttons/tables and forms
+        function showCreate(){
+            document.getElementById('showCreateButton').style.display="none"
+            document.getElementById('frameTable').style.display="none"
+            document.getElementById('createUpdateForm').style.display="block"
+
+            document.getElementById('createLabel').style.display="inline"
+            document.getElementById('updateLabel').style.display="none"
+
+            document.getElementById('doCreateButton').style.display="block"
+            document.getElementById('doUpdateButton').style.display="none"
+        }
+
+        // Function to show the create button and table & hides the update form 
+        function showViewAll(){
+            document.getElementById('showCreateButton').style.display="block"
+            document.getElementById('frameTable').style.display="block"
+            document.getElementById('createUpdateForm').style.display="none"
+        }
+
+        // Shows the update form and hides everything else
+        function showUpdate(buttonElement){
+            document.getElementById('showCreateButton').style.display="none"
+            document.getElementById('frameTable').style.display="none"
+            document.getElementById('createUpdateForm').style.display="block"
+
+            document.getElementById('createLabel').style.display="none"
+            document.getElementById('updateLabel').style.display="inline"
+
+            document.getElementById('doCreateButton').style.display="none"
+            document.getElementById('doUpdateButton').style.display="block"
+
+            var rowElement = buttonElement.parentNode.parentNode  
+            var frame = getFrameFromRow(rowElement)
+            populateFormWithFrame(frame)
+
+        }
+        // Function to create a new frame
+        function doCreate(){
+            var form = document.getElementById('createUpdateForm')
+
+            var frame = {}
+        
+            frame.Occasion = form.querySelector('input[name="Occasion"]').value
+            frame.Colour = form.querySelector('input[name="Colour"]').value
+            frame.Height = form.querySelector('input[name="Height"]').value
+            frame.Width = form.querySelector('input[name="Width"]').value
+            frame.Price = form.querySelector('input[name="Price"]').value
+            console.log(JSON.stringify(frame))
+            createFrameAjax(frame)    
+        }
+
+        // Calling functions
+        function doUpdate(){
+            var frame = getFrameFromForm();
+            var rowElement = document.getElementById(frame.id);
+            updateFrameAjax(frame);
+            setFrameInRow(rowElement,frame);
+        
+            clearForm();
+            showViewAll();
+        }
+
+        //Deleting a frame from the table 
+        function doDelete(r){
+            var tableElement = document.getElementById('frameTable');
+            var rowElement = r.parentNode.parentNode;
+            var index = rowElement.rowIndex;
+            deleteFrameAjax(rowElement.getAttribute("id"));
+            tableElement.deleteRow(index);
+        }
+
+        // Adding new frame details to the table
+        function addFrameToTable(frame){
+            var tableElement = document.getElementById('frameTable')
+            var rowElement = tableElement.insertRow(-1)
+            rowElement.setAttribute('id',frame.id)
+            var cell1 = rowElement.insertCell(0);
+            cell1.innerHTML = frame.id
+            var cell2 = rowElement.insertCell(1);
+            cell2.innerHTML = frame.Occasion
+            var cell3 = rowElement.insertCell(2);
+            cell3.innerHTML = frame.Colour
+            var cell4 = rowElement.insertCell(3);
+            cell4.innerHTML = frame.Height
+            var cell5 = rowElement.insertCell(4);
+            cell5.innerHTML = frame.Width
+            var cell6 = rowElement.insertCell(5);
+            cell6.innerHTML = frame.Price
+            var cell7 = rowElement.insertCell(6);
+            cell7.innerHTML = '<button onclick="showUpdate(this)">Update</button>'
+            var cell8 = rowElement.insertCell(7);
+            cell8.innerHTML = '<button onclick=doDelete(this)>Delete</button>'
+        }
+
+        // Function to clear the inputted data from the form when creating a new candle
+        function clearForm(){
+            var form = document.getElementById('createUpdateForm')
+
+            form.querySelector('input[name="Occasion"]').value=''
+            form.querySelector('input[name="Colour"]').value=''
+            form.querySelector('input[name="Height"]').value=''
+            form.querySelector('input[name="Width"]').value=''
+            form.querySelector('input[name="Price"]').value=''
+
+        }
+
+        // Takes in a row element and returns a frame object
+        function getFrameFromRow(rowElement){
+            var car ={}
+            frame.id  = rowElement.getAttribute('id')
+            frame.Occasion = rowElement.cells[1].firstChild.textContent
+            frame.Colour = rowElement.cells[2].firstChild.textContent
+            frame.Height = parseInt(rowElement.cells[3].firstChild.textContent,10)
+            frame.Width = parseInt(rowElement.cells[4].firstChild.textContent,10)
+            frame.Price = parseInt(rowElement.cells[5].firstChild.textContent,10)
+            return frame
+        }
+
+        // Populate the row with the details of the frame 
+        function setFrameInRow(rowElement, frame){
+            rowElement.cells[0].firstChild.textContent= frame.id  
+            rowElement.cells[1].firstChild.textContent= frame.Occasion
+            rowElement.cells[2].firstChild.textContent= frame.Colour
+            rowElement.cells[3].firstChild.textContent= frame.Height
+            rowElement.cells[4].firstChild.textContent= frame.Width
+            rowElement.cells[5].firstChild.textContent= frame.Price
+        }
+
+        // Populate the form with the details of the frame being updated 
+        function populateFormWithFrame(frame){
+            var form = document.getElementById('createUpdateForm')
+            form.querySelector('input[name="id"]').disabled = true
+
+            form.querySelector('input[name="id"]').value  = frame.id
+            form.querySelector('input[name="Occasion"]').value= frame.Occasion
+            form.querySelector('input[name="Colour"]').value= frame.Colour
+            form.querySelector('input[name="Height"]').value= frame.Height
+            form.querySelector('input[name="Width"]').value= frame.Width
+            form.querySelector('input[name="Price"]').value= frame.Price
+            return frame
+        }
+
+        //Read the value of the candle from the form
+        function getFrameFromForm(){
+            var form = document.getElementById('createUpdateForm')
+            var frame = {}
+            frame.id = form.querySelector('input[name="id"]').value
+            frame.Occasion = form.querySelector('input[name="Occasion"]').value
+            frame.Colour = form.querySelector('input[name="Colour"]').value
+            frame.Height = parseInt(form.querySelector('input[name="Height"]').value,10)
+            frame.Width= parseInt(form.querySelector('input[name="Width"]').value,10)
+            frame.Price = parseInt(form.querySelector('input[name="Price"]').value,10)
+            console.log(JSON.stringify(frame))
+            return frame
+        } 
+    </script>
+</html>
